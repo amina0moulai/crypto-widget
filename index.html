@@ -16,22 +16,13 @@
             height: 100vh;
         }
 
-        h1 {
-            font-size: 3em;
-            margin-top: 50px;
-            font-family: 'Arial', sans-serif;
-            color: #00ffff; /* Teinte cyan pour un effet futuriste */
-            text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #00ffff;
-        }
-
         #chart-container {
             margin: 50px auto;
-            max-width: 90%;
-            height: 500px;
+            width: 450px; /* Largeur du graphique */
+            height: 450px; /* Hauteur du graphique pour un léger arrondi */
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            border-radius: 30px; /* Bords arrondis plus marqués */
             box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-            padding: 10px;
             position: relative;
         }
 
@@ -53,7 +44,7 @@
 
         /* Effet sur les courbes de Plotly */
         .plotly-graph-div {
-            border-radius: 10px;
+            border-radius: 30px; /* Bord arrondi sur le graphique */
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
 
@@ -71,7 +62,6 @@
     </style>
 </head>
 <body>
-    <h1>Suivi en Direct du Cours du Bitcoin</h1>
     <div id="chart-container">
         <!-- Graphique affiché ici -->
     </div>
@@ -112,41 +102,24 @@
                         };
 
                         const layout = {
-                            title: {
-                                text: 'Cours du Bitcoin en Direct',
-                                font: {
-                                    size: 24,
-                                    family: 'Arial, sans-serif',
-                                    color: '#00ffff'
-                                }
-                            },
+                            showlegend: false,  // Pas de légende
+                            title: '',  // Pas de titre
                             xaxis: {
-                                title: 'Temps',
-                                titlefont: {
-                                    family: 'Arial',
-                                    size: 16,
-                                    color: '#00ffff'
-                                },
+                                showgrid: true, // Garde la grille
+                                showline: true, // Garde la ligne de l'axe X
                                 tickfont: {
                                     color: '#00ffff'
                                 },
-                                showgrid: true
                             },
                             yaxis: {
-                                title: 'Prix (USD)',
-                                titlefont: {
-                                    family: 'Arial',
-                                    size: 16,
-                                    color: '#00ffff'
-                                },
+                                showgrid: true, // Garde la grille
+                                showline: true, // Garde la ligne de l'axe Y
                                 tickfont: {
                                     color: '#00ffff'
                                 },
-                                showgrid: true
                             },
                             plot_bgcolor: 'rgba(0, 0, 0, 0.5)',  // Fond de graphique sombre
                             paper_bgcolor: 'rgba(0, 0, 0, 0.7)',  // Fond papier sombre
-                            showlegend: false,
                             autosize: true,
                             margin: {
                                 l: 40,
@@ -161,17 +134,9 @@
                     .catch(error => console.error('Erreur de récupération des données :', error));
             }
 
-            setInterval(fetchBitcoinData, 60000);
-            fetchBitcoinData();
+            setInterval(fetchBitcoinData, 60000); // Actualise les données toutes les 60 secondes
+            fetchBitcoinData(); // Charge les données au début
         };
     </script>
-
-    <!-- Ajout d'un iframe pour inclure ton widget -->
-    <iframe src="https://amina0moulai.github.io/crypto-widget/"
-        width="500px"  <!-- Largeur fixe -->
-        height="500px"  <!-- Hauteur fixe -->
-        frameborder="0"
-        style="border-radius: 15px; border: none;">
-    </iframe>
 </body>
 </html>
