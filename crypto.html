@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widget Crypto en Direct</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<div class="crypto-widget"> <!-- Applique la classe ici -->
+    <h2 class="title">Bitcoin</h2>
+    <p id="loading">Chargement...</p>
+    <p id="crypto-price" class="price" style="display:none;"></p>
+</div>
+
+<script>
+    // Fonction pour récupérer les prix de la crypto
+    async function fetchCryptoData() {
+        const url = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            const price = data.bitcoin.usd;
+
+            // Mettre à jour l'UI avec le prix
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('crypto-price').style.display = 'block';
+            document.getElementById('crypto-price').innerText = `$${price}`;
+        } catch (error) {
+            console.error('Erreur lors de la récupération des données crypto:', error);
+        }
+    }
+
+    // Initialiser la récupération des données à l'ouverture du site
+    fetchCryptoData();
+
+    // Mettre à jour les données toutes les 30 secondes
+    setInterval(fetchCryptoData, 30000);
+</script>
+
+</body>
+</html>
