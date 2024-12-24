@@ -4,17 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suivi du Bitcoin</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Inclusion de Plotly avant le script.js -->
     <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist@2.17.1/plotly.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #1a1a1a;
+            color: #fff;
+        }
 
+        #chart-container {
+            margin: 20px auto;
+            max-width: 800px;
+            height: 400px;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Suivi en Direct du Cours du Bitcoin</h1>
     <div id="chart-container">
         <!-- Graphique affiché ici -->
     </div>
-    <!-- Script JS chargé après Plotly -->
-    <script src="script.js"></script>
+    <script>
+        window.onload = function() {
+            const chartContainer = document.getElementById('chart-container');
+
+            if (!chartContainer) {
+                console.error('L\'élément avec l\'ID "chart-container" n\'existe pas dans le HTML.');
+                return;
+            }
+
+            function fetchBitcoinData() {
+                fetch('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1')
+                    .then(response => response.json())
+                    .then(data => {
+                        const prices = data.prices;
+                        const timestamps = [];
+                        const priceValues = [];
+
+                        prices.forEach(price => {
+                            timestamps.push(new Date(price[0]));
+                            priceValues.push(price[1]);
+                        });
+
+                        const trace = {
+                            x: timestamps,
+                            y: priceValues,
+                            type: 'scatter',
+                            mode: 'lines',
+                            line: { color: 'rgb(255, 99, 132)' }
+                        };
+
+                        const layout = {
+                            title: 'Cours du Bitcoin en Direct',
+                            xaxis: { title: 'Temps' },
+                            yaxis: { title: 'Prix (USD)' }
+                        };
+
+                        Plotly.newPlot(chartContainer, [trace], layout);
+                    })
+                    .catch(error => console.error('Erreur de récupération des données :', error));
+            }
+
+            setInterval(fetchBitcoinData, 60000);
+            fetchBitcoinData();
+        };
+    </script>
 </body>
 </html>
