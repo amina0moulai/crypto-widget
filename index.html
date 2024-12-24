@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suivi du Bitcoin</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Inclusion de Plotly avant le script.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <h1>Suivi en Direct du Cours du Bitcoin</h1>
     <div id="chart-container">
-        <!-- Ici on va afficher la courbe -->
-        <canvas id="bitcoinChart"></canvas>
+        <!-- Graphique affiché ici -->
     </div>
+    <!-- Script JS chargé après Plotly -->
     <script src="script.js"></script>
 </body>
 </html>
