@@ -3,25 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suivi du Bitcoin</title>
+    <title>Suivi du Bitcoin - Univers Galactique</title>
     <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist@2.17.1/plotly.min.js"></script>
     <style>
+        /* Style global */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             text-align: center;
-            background-color: #1a1a1a;
-            color: #fff;
-        }
-
-        #chart-container {
-            margin: 20px auto;
-            max-width: 800px;
-            height: 400px;
+            background: radial-gradient(circle, #1a1a1a, #000000); /* Dégradé sombre */
+            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
         }
 
         h1 {
-            font-size: 2em;
-            margin: 20px;
+            font-size: 3em;
+            margin-top: 50px;
+            font-family: 'Arial', sans-serif;
+            color: #00ffff; /* Teinte cyan pour un effet futuriste */
+            text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #00ffff;
+        }
+
+        #chart-container {
+            margin: 50px auto;
+            max-width: 90%;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            padding: 10px;
+            position: relative;
+        }
+
+        /* Animation d'effet de fond pour la galaxie */
+        body::after {
+            content: '';
+            background-image: url('https://www.nasa.gov/sites/default/files/thumbnails/nasa-hubble-space-telescope-galaxy.jpg'); /* Image de fond galaxie */
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(8px);
+            opacity: 0.7;
+        }
+
+        /* Effet sur les courbes de Plotly */
+        .plotly-graph-div {
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Design des axes de Plotly */
+        .xaxisl, .yaxisl {
+            font-family: 'Arial', sans-serif;
+            color: #00ffff;
+            font-weight: bold;
+        }
+
+        /* Design du grid et des titres */
+        .xaxis, .yaxis {
+            gridcolor: rgba(255, 255, 255, 0.2);
         }
     </style>
 </head>
@@ -30,6 +76,7 @@
     <div id="chart-container">
         <!-- Graphique affiché ici -->
     </div>
+
     <script>
         window.onload = function() {
             const chartContainer = document.getElementById('chart-container');
@@ -52,18 +99,62 @@
                             priceValues.push(price[1]);
                         });
 
+                        // Courbe avec un effet lumineux
                         const trace = {
                             x: timestamps,
                             y: priceValues,
                             type: 'scatter',
                             mode: 'lines',
-                            line: { color: 'rgb(255, 99, 132)' }
+                            line: {
+                                color: 'rgb(0, 255, 255)',  // Couleur cyan lumineux
+                                width: 3,
+                                dash: 'solid'
+                            }
                         };
 
                         const layout = {
-                            title: 'Cours du Bitcoin en Direct',
-                            xaxis: { title: 'Temps' },
-                            yaxis: { title: 'Prix (USD)' }
+                            title: {
+                                text: 'Cours du Bitcoin en Direct',
+                                font: {
+                                    size: 24,
+                                    family: 'Arial, sans-serif',
+                                    color: '#00ffff'
+                                }
+                            },
+                            xaxis: {
+                                title: 'Temps',
+                                titlefont: {
+                                    family: 'Arial',
+                                    size: 16,
+                                    color: '#00ffff'
+                                },
+                                tickfont: {
+                                    color: '#00ffff'
+                                },
+                                showgrid: true
+                            },
+                            yaxis: {
+                                title: 'Prix (USD)',
+                                titlefont: {
+                                    family: 'Arial',
+                                    size: 16,
+                                    color: '#00ffff'
+                                },
+                                tickfont: {
+                                    color: '#00ffff'
+                                },
+                                showgrid: true
+                            },
+                            plot_bgcolor: 'rgba(0, 0, 0, 0.5)',  // Fond de graphique sombre
+                            paper_bgcolor: 'rgba(0, 0, 0, 0.7)',  // Fond papier sombre
+                            showlegend: false,
+                            autosize: true,
+                            margin: {
+                                l: 40,
+                                r: 40,
+                                t: 40,
+                                b: 40
+                            },
                         };
 
                         Plotly.newPlot(chartContainer, [trace], layout);
