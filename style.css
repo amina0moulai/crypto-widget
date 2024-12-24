@@ -13,6 +13,17 @@ body {
     background-image: url('https://source.unsplash.com/1600x900/?space,stars');
     background-size: cover;
     background-position: center;
+    animation: spaceAnim 30s infinite linear;
+}
+
+/* Add a cosmic animation to the background */
+@keyframes spaceAnim {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Widget styles */
@@ -23,7 +34,8 @@ body {
     padding: 30px;
     text-align: center;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px); /* Standard syntax */
+    -webkit-backdrop-filter: blur(10px); /* Safari fix */
     width: 350px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -42,6 +54,7 @@ body {
     margin-top: 20px;
     font-weight: bold;
     text-shadow: 0 0 5px rgba(26, 188, 156, 0.8), 0 0 10px rgba(26, 188, 156, 0.6);
+    animation: fadeIn 1s ease-out forwards;
 }
 
 /* Loading text styles */
@@ -59,4 +72,14 @@ body {
     border-radius: 10px;
     background: rgba(0, 0, 0, 0.7);
     box-shadow: 0 0 20px rgba(142, 68, 173, 0.8), 0 0 50px rgba(142, 68, 173, 0.6);
+}
+
+/* Fade-in animation for the price */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
