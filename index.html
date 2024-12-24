@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Graph</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Suivi du Bitcoin</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
-<div id="crypto-widget">
-    <h2 class="title">Bitcoin</h2>
-    <p id="loading">Chargement...</p>
-    <p id="crypto-price" class="price" style="display:none;"></p>
-    <div id="crypto-chart"></div>
-</div>
-
-<script src="script.js"></script>
+    <h1>Suivi en Direct du Cours du Bitcoin</h1>
+    <div id="chart-container">
+        <!-- Ici on va afficher la courbe -->
+        <canvas id="bitcoinChart"></canvas>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
