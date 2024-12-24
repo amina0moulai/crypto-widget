@@ -82,3 +82,25 @@ body {
         opacity: 1;
     }
 }
+/* Title styles */
+#crypto-widget h2 {
+    font-size: 2rem;
+    color: #8e44ad;
+    text-shadow: 0 0 3px rgba(142, 68, 173, 0.7), 0 0 7px rgba(142, 68, 173, 0.5);
+}
+
+/* Price styles */
+#crypto-price {
+    font-size: 1.8rem;
+    color: #1abc9c;
+    margin-top: 20px;
+    font-weight: bold;
+    text-shadow: 0 0 3px rgba(26, 188, 156, 0.7), 0 0 7px rgba(26, 188, 156, 0.5);
+}
+
+/* Loading text styles */
+#loading {
+    font-size: 1.2rem;
+    color: #f39c12;
+    text-shadow: 0 0 3px rgba(243, 156, 18, 0.7), 0 0 7px rgba(243, 156, 18, 0.5);
+}
