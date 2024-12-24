@@ -31,3 +31,61 @@ var layout = {
         color: 'white'
     }
 };
+
+console.log("Script chargé avec succès !");
+
+var trace = {
+    x: [new Date()], // Initialiser le graphique avec la date actuelle
+    y: [0],           // Initialiser la valeur du Bitcoin à 0
+    mode: 'lines',
+    line: {
+        color: '#8e44ad', // Ligne violette néon
+        width: 2
+    },
+    name: 'Bitcoin'
+};
+
+// Initialiser le graphique avec des valeurs par défaut
+Plotly.newPlot('crypto-chart', [trace], layout);
+
+async function fetchCryptoData() {
+    const url = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const price = data.bitcoin.usd;
+
+        console.log('Prix du Bitcoin:', price); // Afficher le prix dans la console pour vérifier
+
+        // Mettre à jour le prix dans le widget
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('crypto-price').style.display = 'block';
+        document.getElementById('crypto-price').innerText = `$${price}`;
+
+        // Mettre à jour le graphique avec les nouvelles données
+        updateChart(price);
+
+    } catch (error) {
+        console.error('Erreur lors de la récupération des données :', error);
+    }
+}
+
+// Fonction pour mettre à jour le graphique avec les nouvelles données
+function updateChart(price) {
+    var newTime = new Date();
+    trace.x.push(newTime);
+    trace.y.push(price);
+
+    if (trace.x.length > 50) { // Limiter le nombre de points sur le graphique
+        trace.x.shift();
+        trace.y.shift();
+    }
+
+    Plotly.update('crypto-chart', { x: [trace.x], y: [trace.y] }, layout);
+}
+
+// Initialiser la récupération des données
+fetchCryptoData();
+
+// Mettre à jour les données toutes les 30 secondes
+setInterval(fetchCryptoData, 30000);
