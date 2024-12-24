@@ -38,18 +38,39 @@ function updateChart(price) {
         y: yValues,
         type: 'scatter', // Type graphique (ici une courbe)
         mode: 'lines+markers', // Affiche à la fois la ligne et les points
-        marker: { color: 'rgb(0, 255, 0)' } // Couleur verte pour les points
+        marker: { color: 'rgb(46, 204, 113)' }, // Couleur verte (élégante)
+        line: { color: 'rgb(142, 68, 173)', width: 3 }, // Couleur violet pour la ligne
+        hovertemplate: 'Prix: $%{y}<extra></extra>',
     }];
 
     // Mise en forme du layout (affichage)
     const layout = {
-        title: 'Prix du Bitcoin en Temps Réel',
+        title: {
+            text: 'Prix du Bitcoin en Temps Réel',
+            font: { size: 24, family: 'Georgia, serif', color: 'rgb(142, 68, 173)' },
+            x: 0.5,
+            y: 0.95
+        },
         xaxis: {
             title: 'Heure',
-            tickangle: 45
+            titlefont: { size: 18, family: 'Georgia, serif', color: 'rgb(186, 189, 182)' },
+            tickangle: 45,
+            showgrid: false,
+            zeroline: false,
         },
         yaxis: {
-            title: 'Prix en USD'
+            title: 'Prix en USD',
+            titlefont: { size: 18, family: 'Georgia, serif', color: 'rgb(186, 189, 182)' },
+            showgrid: true,
+            zeroline: true,
+            gridcolor: 'rgb(44, 62, 80)', // Gris pour les lignes de grille
+        },
+        plot_bgcolor: 'rgb(18, 18, 18)', // Fond noir pour le graphique
+        paper_bgcolor: 'rgb(44, 62, 80)', // Fond de la page
+        showlegend: false, // Ne pas afficher la légende
+        hoverlabel: {
+            bgcolor: 'rgb(142, 68, 173)', // Violet pour les bulles de survol
+            font: { color: 'white' }
         }
     };
 
