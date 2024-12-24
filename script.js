@@ -1,68 +1,78 @@
-// Déclaration des données pour le graphique
-let timeLabels = []; // Pour stocker les labels de temps
-let priceData = [];  // Pour stocker les données des prix
+// Variables globales pour les données du graphique
+let timeLabels = []; // Pour l'axe des x (temps)
+let priceData = [];  // Pour l'axe des y (prix)
 
-// Création du graphique
-const ctx = document.getElementById('crypto-chart').getContext('2d');
-const cryptoChart = new Chart(ctx, {
-    type: 'line', // Type de graphique en courbe
-    data: {
-        labels: timeLabels, // Labels des X
-        datasets: [{
-            label: 'Prix du Bitcoin (USD)',
-            data: priceData, // Données des Y (prix)
-            borderColor: '#1abc9c',
-            backgroundColor: 'rgba(26, 188, 156, 0.2)',
-            borderWidth: 2,
-            tension: 0.4, // Lissage de la courbe
-        }]
-    },
-    options: {
-        scales: {
-            x: {
-                type: 'linear',
-                position: 'bottom',
-                ticks: {
-                    stepSize: 1
-                }
-            },
-            y: {
-                beginAtZero: false,
-                ticks: {
-                    callback: function(value) {
-                        return '$' + value; // Affichage des prix en USD
-                    }
-                }
-            }
-        },
-    }
-});
-
-// Fonction pour récupérer les prix de la crypto
 async function fetchCryptoData() {
     const url = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
     try {
         const response = await fetch(url);
         const data = await response.json();
         const price = data.bitcoin.usd;
-        const time = new Date().getTime(); // Heure actuelle en millisecondes
 
-        // Ajouter les nouvelles données au graphique
-        timeLabels.push(time);
-        priceData.push(price);
-
-        // Mettre à jour le graphique avec les nouvelles données
-        cryptoChart.update();
-
-        // Mettre à jour l'UI avec le prix
+        // Afficher le prix de la crypto
         document.getElementById('loading').style.display = 'none';
         document.getElementById('crypto-price').style.display = 'block';
         document.getElementById('crypto-price').innerText = `$${price}`;
 
-        // Afficher le graphique
-        document.getElementById('crypto-chart').style.display = 'block';
+        // Mettre à jour les données pour le graphique
+        updateChart(price);
     } catch (error) {
         console.error('Erreur lors de la récupération des données crypto:', error);
+    }
+}
+
+// Mettre à jour le graphique avec les nouvelles données
+function updateChart(price) {
+    // Ajouter la nouvelle donnée de prix à l'array
+    if (timeLabels.length >= 10) { // Limiter le nombre de points à 10 pour ne pas surcharger le graphique
+        timeLabels.shift(); // Supprimer le premier élément (ancien)
+        priceData.shift();  // Supprimer le premier prix
+    }
+
+    // Ajouter le nouveau point à la fin
+    timeLabels.push(new Date().toLocaleTimeString());
+    priceData.push(price);
+
+    // Créer ou mettre à jour le graphique
+    const ctx = document.getElementById('crypto-chart').getContext('2d');
+
+    // Créer un nouveau graphique si aucun n'existe
+    if (window.cryptoChart) {
+        window.cryptoChart.data.labels = timeLabels;
+        window.cryptoChart.data.datasets[0].data = priceData;
+        window.cryptoChart.update();
+    } else {
+        window.cryptoChart = new Chart(ctx, {
+            type: 'line', // Type de graphique : courbe
+            data: {
+                labels: timeLabels, // Labels pour l'axe des x
+                datasets: [{
+                    label: 'Bitcoin (USD)',
+                    data: priceData, // Données pour l'axe des y
+                    borderColor: '#1abc9c',
+                    borderWidth: 2,
+                    fill: false, // Ne pas remplir l'intérieur de la courbe
+                    tension: 0.1 // Courbe lisse
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom'
+                    },
+                    y: {
+                        beginAtZero: false,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toFixed(2); // Afficher le prix avec un symbole de dollar
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 }
 
