@@ -5,25 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypto Graph</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <style>
-        body {
-            background-color: rgb(44, 62, 80); /* Fond gris foncé */
-            color: rgb(186, 189, 182); /* Texte gris clair */
-            font-family: 'Georgia', serif;
-            text-align: center;
-            padding: 50px;
-        }
-        #crypto-chart {
-            width: 80%;
-            height: 400px;
-            margin: 0 auto;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
-<h1 style="color: rgb(142, 68, 173);">Prix du Bitcoin en Temps Réel</h1>
-<div id="crypto-chart"></div>
+<div id="crypto-widget">
+    <h2 class="title">Bitcoin</h2>
+    <p id="loading">Chargement...</p>
+    <p id="crypto-price" class="price" style="display:none;"></p>
+    <div id="crypto-chart"></div>
+</div>
 
 <script src="script.js"></script>
 </body>
