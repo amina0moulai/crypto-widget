@@ -3,20 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Widget Crypto en Direct</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Crypto Graph</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
 
-<div class="crypto-widget">
-    <h2 class="title">Bitcoin</h2>
-    <p id="loading">Chargement...</p>
-    <p id="crypto-price" class="price" style="display:none;"></p>
-    <canvas id="crypto-chart" width="400" height="200" style="display:block;"></canvas> <!-- Le graphique -->
-</div>
+<div id="crypto-chart"></div>
 
-<script src="script.js"></script> <!-- Ici, on inclut ton fichier script.js -->
-
+<script src="script.js"></script>
 </body>
 </html>
